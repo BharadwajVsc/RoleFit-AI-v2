@@ -255,7 +255,7 @@ This project is being built to deeply explore:
 
 # Author
 
-Velavalapalli Sai Chandrasekhara Bharadwaj
+VSC Bharadwaj
 
 ---
 
