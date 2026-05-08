@@ -16,7 +16,7 @@ This version focuses on building a modern GenAI-powered ATS-style candidate eval
 * Prompt Engineering
 * RAG Pipelines
 
-Unlike V1, which was primarily a terminal-based prototype using procedural scripts and FAISS, RoleFit AI V2 introduces a modular architecture with scalable retrieval pipelines, structured outputs, semantic reranking, and production-style backend design.
+Unlike V1, which was primarily a terminal-based prototype using procedural scripts and FAISS, RoleFit AI V2 introduces a modular architecture with scalable retrieval pipelines, structured outputs, hybrid retrieval systems, metadata-aware chunking, and production-style backend design.
 
 ---
 
@@ -27,11 +27,15 @@ Unlike V1, which was primarily a terminal-based prototype using procedural scrip
 * Local LLM inference using Ollama
 * ChromaDB vector storage
 * Semantic search using embeddings
+* BM25 keyword retrieval
 * Hybrid retrieval pipeline
+* PDF resume ingestion pipeline
+* Text chunking pipeline
+* Metadata-aware retrieval
+* Similarity score retrieval
 * Prompt-engineered RAG workflows
 * Structured JSON outputs
 * FastAPI backend APIs
-* Metadata-aware retrieval
 * Modular GenAI architecture
 * Local-first and privacy-friendly design
 
@@ -39,34 +43,34 @@ Unlike V1, which was primarily a terminal-based prototype using procedural scrip
 
 # Tech Stack
 
-| Category          | Technology        |
-| ----------------- | ----------------- |
-| Backend           | FastAPI           |
-| LLM Orchestration | LangChain         |
-| LLM Runtime       | Ollama            |
-| Vector Database   | ChromaDB          |
-| Embedding Model   | nomic-embed-text  |
-| Primary LLM       | Gemma / Qwen2.5   |
-| Retrieval         | Hybrid Retrieval  |
-| Reranking         | BGE Reranker      |
-| PDF Parsing       | LangChain Loaders |
-| API Docs          | Swagger/OpenAPI   |
+| Category | Technology |
+|---|---|
+| Backend | FastAPI |
+| LLM Orchestration | LangChain |
+| LLM Runtime | Ollama |
+| Vector Database | ChromaDB |
+| Embedding Model | nomic-embed-text |
+| Primary LLM | Gemma / Qwen2.5 |
+| Retrieval | Hybrid Retrieval |
+| Reranking | BGE Reranker |
+| PDF Parsing | LangChain Loaders |
+| API Docs | Swagger/OpenAPI |
 
 ---
 
 # V1 vs V2
 
-| Feature         | RoleFit AI V1         | RoleFit AI V2       |
-| --------------- | --------------------- | ------------------- |
-| Architecture    | Terminal Script       | Modular Backend     |
-| Vector DB       | FAISS                 | ChromaDB            |
-| LLM Integration | Manual                | LangChain + Ollama  |
-| API Layer       | None                  | FastAPI             |
-| Retrieval       | Basic Semantic Search | Hybrid Retrieval    |
-| Prompting       | Static Prompts        | Prompt Templates    |
-| Output Parsing  | Manual JSON Cleaning  | Structured Outputs  |
-| Embeddings      | MiniLM                | nomic-embed-text    |
-| Scalability     | Prototype             | Production-Oriented |
+| Feature | RoleFit AI V1 | RoleFit AI V2 |
+|---|---|---|
+| Architecture | Terminal Script | Modular Backend |
+| Vector DB | FAISS | ChromaDB |
+| LLM Integration | Manual | LangChain + Ollama |
+| API Layer | None | FastAPI |
+| Retrieval | Basic Semantic Search | Hybrid Retrieval |
+| Prompting | Static Prompts | Prompt Templates |
+| Output Parsing | Manual JSON Cleaning | Structured Outputs |
+| Embeddings | MiniLM | nomic-embed-text |
+| Scalability | Prototype | Production-Oriented |
 
 ---
 
@@ -77,11 +81,15 @@ Resume Upload
       ↓
 PDF Loader
       ↓
-Semantic Chunking
+Text Chunking
       ↓
 Embeddings
       ↓
 ChromaDB
+      ↓
+Vector Retrieval
+      ↓
+BM25 Retrieval
       ↓
 Hybrid Retrieval
       ↓
@@ -94,24 +102,28 @@ Ollama LLM
 Structured Match Analysis
       ↓
 FastAPI JSON Response
+# Current Retrieval Stack
+
+* ChromaDB semantic retrieval
+* BM25 keyword retrieval
+* Hybrid retrieval architecture
+* Local Ollama embeddings
+* Metadata-aware chunk retrieval
 ```
 
 ---
-
 # Project Structure
 
 ```text
 rolefit-ai-v2/
 │
 ├── app/
-│   ├── api/
-│   ├── chains/
-│   ├── prompts/
+│   ├── chunking/
+│   ├── ingestion/
+│   ├── loaders/
 │   ├── retrievers/
-│   ├── vectorstores/
-│   ├── services/
-│   ├── models/
-│   └── utils/
+│   ├── utils/
+│   └── vectorstores/
 │
 ├── chroma_db/
 ├── data/
@@ -119,11 +131,19 @@ rolefit-ai-v2/
 │
 ├── main.py
 ├── requirements.txt
-├── .env
-└── README.md
+├── README.md
+└── .gitignore
 ```
 
 ---
+
+# Current Retrieval Stack
+
+* ChromaDB semantic retrieval
+* BM25 keyword retrieval
+* Hybrid retrieval architecture
+* Local Ollama embeddings
+* Metadata-aware chunk retrieval
 
 # Current Development Status
 
@@ -136,15 +156,23 @@ rolefit-ai-v2/
 * Local embedding pipeline
 * LangChain integration
 * Persistent vector storage
+* PDF resume ingestion pipeline
+* PDF parsing using LangChain loaders
+* Text chunking pipeline
+* Metadata-aware chunk storage
+* Similarity score retrieval
+* BM25 keyword retrieval
+* Hybrid retrieval architecture
+* Retrieval comparison testing
 
 ## In Progress
 
-* Resume ingestion pipeline
-* Semantic chunking
-* Hybrid retrieval
+* Retrieval fusion strategies
+* Reranking pipelines
 * Prompt engineering
-* Reranking
-* Match scoring engine
+* ATS scoring engine
+* Query optimization
+* Resume section classification
 * FastAPI endpoints
 
 ---
@@ -243,6 +271,7 @@ This project is being built to deeply explore:
 * Retrieval-Augmented Generation (RAG)
 * Vector Databases
 * Semantic Search
+* Hybrid Retrieval Systems
 * Local LLM Deployment
 * Prompt Engineering
 * LangChain Orchestration
