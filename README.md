@@ -29,9 +29,10 @@ Unlike V1, which was primarily a terminal-based prototype using procedural scrip
 * Semantic search using embeddings
 * BM25 keyword retrieval
 * Hybrid retrieval pipeline
+* Metadata-aware chunking
+* Section-aware retrieval metadata
 * PDF resume ingestion pipeline
 * Text chunking pipeline
-* Metadata-aware retrieval
 * Similarity score retrieval
 * Prompt-engineered RAG workflows
 * Structured JSON outputs
@@ -81,7 +82,9 @@ Resume Upload
       ↓
 PDF Loader
       ↓
-Text Chunking
+Section Detection
+      ↓
+Metadata-Aware Chunking
       ↓
 Embeddings
       ↓
@@ -102,16 +105,21 @@ Ollama LLM
 Structured Match Analysis
       ↓
 FastAPI JSON Response
+```
+
+---
+
 # Current Retrieval Stack
 
 * ChromaDB semantic retrieval
 * BM25 keyword retrieval
 * Hybrid retrieval architecture
-* Local Ollama embeddings
 * Metadata-aware chunk retrieval
-```
+* Section-aware chunk metadata
+* Local Ollama embeddings
 
 ---
+
 # Project Structure
 
 ```text
@@ -137,14 +145,6 @@ rolefit-ai-v2/
 
 ---
 
-# Current Retrieval Stack
-
-* ChromaDB semantic retrieval
-* BM25 keyword retrieval
-* Hybrid retrieval architecture
-* Local Ollama embeddings
-* Metadata-aware chunk retrieval
-
 # Current Development Status
 
 ## Completed
@@ -160,19 +160,21 @@ rolefit-ai-v2/
 * PDF parsing using LangChain loaders
 * Text chunking pipeline
 * Metadata-aware chunk storage
+* Section-aware metadata tagging
 * Similarity score retrieval
 * BM25 keyword retrieval
 * Hybrid retrieval architecture
+* Retrieval fusion logic
 * Retrieval comparison testing
 
 ## In Progress
 
-* Retrieval fusion strategies
-* Reranking pipelines
+* Retrieval fusion optimization
+* Retrieval reranking pipelines
 * Prompt engineering
 * ATS scoring engine
 * Query optimization
-* Resume section classification
+* Advanced resume section classification
 * FastAPI endpoints
 
 ---
@@ -211,7 +213,7 @@ pip install -r requirements.txt
 
 Download Ollama:
 
-[https://ollama.com/download](https://ollama.com/download)
+https://ollama.com/download
 
 ---
 
@@ -255,7 +257,7 @@ http://127.0.0.1:8000/docs
 * ATS scoring system
 * Resume improvement suggestions
 * Skill gap analysis
-* Metadata-aware retrieval
+* Metadata-aware retrieval filtering
 * Cross-encoder reranking
 * Resume section classification
 * Dashboard frontend
@@ -272,13 +274,13 @@ This project is being built to deeply explore:
 * Vector Databases
 * Semantic Search
 * Hybrid Retrieval Systems
+* Metadata-Aware Retrieval
 * Local LLM Deployment
 * Prompt Engineering
 * LangChain Orchestration
 * AI Backend Engineering
 * Production-Style GenAI Architecture
-* Hybrid Retrieval Systems
-* LLM Evaluation Pipelines
+* Retrieval Evaluation Pipelines
 
 ---
 
