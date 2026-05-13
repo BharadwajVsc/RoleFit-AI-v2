@@ -2,6 +2,10 @@ from app.ingestion.ingest_resume import ingest_resume
 from app.retrievers.hybrid_retriever import hybrid_retriever
 from app.vectorstores.chroma_store import get_vectorstore
 
+import logging
+
+logging.basicConfig(level=logging.INFO)
+
 # Reset vectorstore
 vectorstore = get_vectorstore()
 
@@ -9,31 +13,39 @@ vectorstore.delete_collection()
 
 vectorstore = get_vectorstore()
 
-
 # Ingest Resume
 documents = ingest_resume("data/resumes/Bharadwaj VSC Resume.pdf")
 
-# Query
-query = (
-    "Experience with Generative AI, RAG, prompt engineering, and FastAPI development"
-)
+# Test queries
+queries = [
+    "Experience with FastAPI and RAG pipelines",
+    "retrieval augmented generation systems",
+    "machine learning and NLP",
+    "REST API development",
+    "LangChain workflows",
+]
 
-# Hybrid Retrieval
-results = hybrid_retriever(query, documents)
+for query in queries:
 
-print("\n================ VECTOR RETRIEVAL ================\n")
-for doc, score in results["vector_results"]:
+    print("\n" + "=" * 80)
 
-    print(f"Score: {score}")
+    print(f"\nQUERY: {query}\n")
 
-    print(doc.page_content)
+    results = hybrid_retriever(query, documents)
 
-    print(doc.metadata)
+    print(f"Total Results: {len(results)}\n")
 
-    print("-" * 50)
+    for result in results:
 
-print("\n================ BM25 RETRIEVAL ================\n")
-for doc in results["bm25_results"]:
-    print(doc.page_content)
-    print(doc.metadata)
-    print("-" * 50)
+        doc = result["document"]
+
+        score = result["score"]
+
+        retriever = result["retriever"]
+
+        print(f"Retriever: {retriever}")
+        print(f"Score: {score}")
+        print(doc.page_content)
+        print(doc.metadata)
+        print(f"Section: {doc.metadata.get('section')}")
+        print("-" * 50)

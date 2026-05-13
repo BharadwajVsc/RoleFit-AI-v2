@@ -1,7 +1,7 @@
 from app.vectorstores.chroma_store import get_vectorstore
 
 
-def retrieve_documents(query: str, k: int = 5):
+def retrieve_documents(query, k: int = 5):
 
     vectorstore = get_vectorstore()
 
